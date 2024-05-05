@@ -47,15 +47,15 @@ public class JavaProject {
 
         System.out.println();
 
-        c.sum(transposeMatrix1, transposeMatrix2);
+        System.out.println("Select an operation(sum/sub/mult): ");
+        String operation = input.next();
 
-        System.out.println();
-
-        System.out.println(c.sub(transposeMatrix1, transposeMatrix2 ));
-
-        System.out.println();
-
-        System.out.println(c.mult(transposeMatrix1, transposeMatrix2));
+        switch(operation) {
+            case "sum":  c.sum(transposeMatrix1, transposeMatrix2); break;
+            case "sub":  System.out.println(c.sub(transposeMatrix1, transposeMatrix2 )); break;
+            case "mult":  System.out.println(c.mult(transposeMatrix1, transposeMatrix2)); break;
+            default: System.out.println("Invalid operation!");
+        }
 
         System.out.println("Do you want to continue(Yes/No): ");
         control = input.next();
