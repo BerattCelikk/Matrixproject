@@ -22,6 +22,7 @@ public class MatrixEntrance{
         }
         System.out.println("What do you want to calculate with this matrix ? :");
         System.out.println("sum => + / subtraction => - / multiplication => * / Diagonal and Trace => d /Symmetric or asymmetric => s /Orthogonal matrix or not => o ");
+        System.out.println("Periodic matrix or not => p /Idempotent matrix or not => i /Nilpotent matrix or not => n / Involutive matrix or not => v ");
         operation=get.next().charAt(0);
         if((operation=='+') || (operation=='-') || (operation=='*')){
             System.out.println("Enter second matrix's length of rows : ");
@@ -115,7 +116,7 @@ public class MatrixEntrance{
                         System.out.println("first matrix' column and second matrix' row aren't equal so they can't be multiplication.");
                     }
             }
-        }else if((operation == 'd')||(operation == 's')){
+        }else if((operation == 'd')||(operation == 's')||(operation=='p')||(operation=='i')||(operation=='n')||(operation=='v')){
             
                 switch(operation){
                     case ('d'):
@@ -139,6 +140,7 @@ public class MatrixEntrance{
                         }else{
                             System.out.println("MATRIX MUST BE SQUARE MATRIX .");
                         }
+                        break;
                     case ('s'):
                         int issymmetric=1;
                         int isasymmetric=1;
@@ -184,6 +186,172 @@ public class MatrixEntrance{
                             }
                         }else{
                             System.out.println("MATRIX MUST BE SQUARE MATRIX .");
+                        }
+                        break;
+                    case('p'):
+                        System.out.println("enter the period of matrix :");
+                        int period=get.nextInt();
+                        int periodic_matrix[][]=new int[row1][col1];
+                        System.out.println("PERIODIC  MATRIX : ");
+                        for(int p=1;p<=period+1;p++){
+                            for(int i=0;i<row1;i++){
+                                for(int j=0;j<col1;j++){
+                                    int sum=0;
+                                    for(int k=0;k<col1;k++){
+                                        
+                                        sum+=matrix1[i][k]*matrix1[k][j];
+                                    }
+                                    periodic_matrix[i][j]+= sum;
+                                }
+                            }    
+                        }
+                        
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                System.out.printf("%3d",periodic_matrix[i][j]);
+                            }
+                            System.out.println();
+                        }
+                        boolean isperiodic=true;
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                if(periodic_matrix[i][j]!=matrix1[i][j]){
+                                    isperiodic=false;
+                                    break;
+                                }
+                            }
+                            if(!(isperiodic)){
+                                break;
+                            }
+                        }
+                        if(isperiodic){
+                            System.out.println("Your matrix is an idempotent matrix");
+                        }else{
+                            System.out.println("Your matrix is not an idempotent matrix");
+                        }
+                        break;
+                    case('i'):
+                        int idempotent_matrix[][]=new int[row1][col1];
+                        System.out.println("IDEMPOTENT MATRIX : ");
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                int sum=0;
+                                for(int k=0;k<col1;k++){
+                                    sum+=matrix1[i][k]*matrix1[k][j];
+                                }
+                                idempotent_matrix[i][j]= sum;
+                            }
+                        }
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                System.out.printf("%3d",idempotent_matrix[i][j]);
+                            }
+                            System.out.println();
+                        }
+                        boolean isidempotent=true;
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                if(idempotent_matrix[i][j]!=matrix1[i][j]){
+                                    isidempotent=false;
+                                    break;
+                                }
+                            }
+                            if(!(isidempotent)){
+                                break;
+                            }
+                        }
+                        if(isidempotent){
+                            System.out.println("Your matrix is an idempotent matrix");
+                        }else{
+                            System.out.println("Your matrix is not an idempotent matrix");
+                        }
+                        break;
+                    case ('n'):
+                        System.out.println("enter the power of matrix :");
+                        int power=get.nextInt();
+                        int nilpotent_matrix[][]=new int[row1][col1];
+                        System.out.println("NILPOTENT  MATRIX : ");
+                        for(int p=1;p<=power;p++){
+                            for(int i=0;i<row1;i++){
+                                for(int j=0;j<col1;j++){
+                                    int sum=0;
+                                    for(int k=0;k<col1;k++){
+                                        
+                                        sum+=matrix1[i][k]*matrix1[k][j];
+                                    }
+                                    nilpotent_matrix[i][j]+= sum;
+                                }
+                            }    
+                        }
+                        
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                System.out.printf("%3d",nilpotent_matrix[i][j]);
+                            }
+                            System.out.println();
+                        }
+                        boolean isnilpotent=true;
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                if(nilpotent_matrix[i][j]!=0){
+                                    isnilpotent=false;
+                                    break;
+                                }
+                            }
+                            if(!(isnilpotent)){
+                                break;
+                            }
+                        }
+                        if(isnilpotent){
+                            System.out.println("Your matrix is a nilpotent matrix");
+                        }else{
+                            System.out.println("Your matrix is not a nilpotent matrix");
+                        }
+                        break;
+                    case ('v'):
+                        int involutive_matrix[][]=new int[row1][col1];
+                        System.out.println("INVOLUTIVE MATRIX : ");
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                int sum=0;
+                                for(int k=0;k<col1;k++){
+                                    sum+=matrix1[i][k]*matrix1[k][j];
+                                }
+                                involutive_matrix[i][j]= sum;
+                            }
+                        }
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                System.out.printf("%3d",involutive_matrix[i][j]);
+                            }
+                            System.out.println();
+                        }
+                        int unitmatrix[][]=new int[100][100];
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                if(i==j){
+                                    unitmatrix[i][j]=1;
+                                }
+                            }
+                        }
+                        
+                        
+                        boolean isinvolutive=true;
+                        for(int i=0;i<row1;i++){
+                            for(int j=0;j<col1;j++){
+                                if(involutive_matrix[i][j]!=unitmatrix[i][j]){
+                                    isinvolutive=false;
+                                    break;
+                                }
+                            }
+                            if(!(isinvolutive)){
+                                break;
+                            }
+                        }
+                        if(isinvolutive){
+                            System.out.println("Your matrix is an idempotent matrix");
+                        }else{
+                            System.out.println("Your matrix is not an idempotent matrix");
                         }
                 }
         }else if (operation == 'o') {
