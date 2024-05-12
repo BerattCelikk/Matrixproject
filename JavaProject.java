@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class JavaProject {
@@ -13,49 +12,75 @@ public class JavaProject {
 
         System.out.println("Please enter the length of 2 matrixes: ");
         int n = input.nextInt();
-        int transposeMatrix1 [][] = new int[n][n];
-        int transposeMatrix2 [][] = new int[n][n];
+        int Matrix1 [][] = new int[n][n];
+        int Matrix2 [][] = new int[n][n];
 
         operations c = new operations();
 
-        Random r=new Random();
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                transposeMatrix1[i][j]=r.nextInt(10);
+                System.out.printf("Enter a number to (%d,%d). first matrix element : ",i,j);
+                Matrix1[i][j]=input.nextInt();
             }
         }
+        System.out.println("FIRST MATRIX:");
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                transposeMatrix2[i][j]=r.nextInt(10);
-            }
-        }
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                System.out.printf("%2d",transposeMatrix1[i][j]);
+                System.out.printf("%3d",Matrix1[i][j]);
             }
             System.out.println();
         }
 
-        System.out.println();
-
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                System.out.printf("%2d",transposeMatrix2[i][j]);
+                System.out.printf("Enter a number to (%d,%d). second matrix element : ",i,j);
+                Matrix2[i][j]=input.nextInt();
+            }
+        }
+        System.out.println("SECOND MATRIX : ");
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                System.out.printf("%3d",Matrix2[i][j]);
             }
             System.out.println();
         }
 
-        System.out.println();
 
-        System.out.println("Select an operation(sum/sub/mult): ");
-        String operation = input.next();
+        System.out.println("What do you want to calculate with this matrix? :");
+        System.out.println("sum => + / subtraction => - / multiplication => * / Diagonal and Trace => d /Symmetric or asymmetric => s /Orthogonal matrix or not => o ");
+
+        char operation = input.next().charAt(0);
 
         switch(operation) {
-            case "sum":  c.sum(transposeMatrix1, transposeMatrix2); break;
-            case "sub":  System.out.println(c.sub(transposeMatrix1, transposeMatrix2 )); break;
-            case "mult":  System.out.println(c.mult(transposeMatrix1, transposeMatrix2)); break;
+            case '+':  c.sum(Matrix1, Matrix2); break;
+            case '-':  System.out.println(c.sub(Matrix1, Matrix2 )); break;
+            case '*':  System.out.println(c.mult(Matrix1, Matrix2)); break;
+            case 's':   
+            System.out.println("TRANSPOSE OF MATRIX : ");
+            int transposematrix1[][]=new int[n][n];
+            for(int i = 0; i < n; i++) {
+                for(int j = 0; j < n; j++) {
+                    transposematrix1[j][i] = Matrix1[i][j];
+                    System.out.printf("%3d", Matrix1[j][i]);
+                }
+                System.out.println();
+            }
+            boolean symmetric = true;
+            boolean asymmetric = true;
+            symmetric = c.checkSymmetryWithRecursive(Matrix1, transposematrix1, n, 0 , 0, symmetric, asymmetric);
+            if (asymmetric) {
+                System.out.println("Your matrix is an asymmetric matrix.");
+            } else if (symmetric) {
+                System.out.println("Your matrix is a symmetric matrix.");
+            } else {
+                System.out.println("Your matrix is neither symmetric nor asymmetric matrix.");
+            } break;
+            case 'd':
+            case 'o':
             default: System.out.println("Invalid operation!");
         }
+
+
 
         System.out.println("Do you want to continue(Yes/No): ");
         control = input.next();
@@ -65,14 +90,14 @@ public class JavaProject {
   }
 
 class operations {
-    void sum(int[][] transposeMatrix1, int[][] transposeMatrix2) {
+    void sum(int[][] Matrix1, int[][] Matrix2) {
 
-        int length = transposeMatrix1.length;
+        int length = Matrix1.length;
         int sum[][] = new int[length][length];
 
         for(int i=0; i<length; i++) {
             for(int j=0; j<length; j++) {
-                sum[i][j] = transposeMatrix1[i][j] + transposeMatrix2[i][j];
+                sum[i][j] = Matrix1[i][j] + Matrix2[i][j];
             }
         }
         for(int i=0; i<length; i++) {
@@ -83,13 +108,13 @@ class operations {
     }
 }
 
-    int sub(int[][] transposeMatrix1, int[][] transposeMatrix2) {
-        int length = transposeMatrix1.length;
+    int sub(int[][] Matrix1, int[][] Matrix2) {
+        int length = Matrix1.length;
         int sub[][] = new int[length][length];
 
         for(int i=0; i<length; i++) {
             for(int j=0; j<length; j++) {
-                sub[i][j] = transposeMatrix1[i][j] - transposeMatrix2[i][j];
+                sub[i][j] = Matrix1[i][j] - Matrix2[i][j];
             }
         }
         for(int i=0; i<length; i++) {
@@ -100,14 +125,14 @@ class operations {
     }
         return 0;
 }
-    static int mult(int[][] transposeMatrix1, int[][] transposeMatrix2) {
-        int length = transposeMatrix1.length;
+    static int mult(int[][] Matrix1, int[][] Matrix2) {
+        int length = Matrix1.length;
         int mult[][] = new int[length][length];
         
         for (int i=0; i <length; i++) {
             for (int j=0; j <length; j++) {
                 for (int k=0; k<length; k++) {
-                    mult[i][j] += transposeMatrix1[i][k] * transposeMatrix2[k][j];
+                    mult[i][j] += Matrix1[i][k] * Matrix2[k][j];
                 }
             }
         }
@@ -119,6 +144,20 @@ class operations {
     }
         return 0;
 }
-
+    boolean checkSymmetryWithRecursive(int[][] Matrix1, int[][] transpose, int n, int i, int j, boolean symmetric, boolean asymmetric) {
+        if (i == n) {
+        return symmetric;
+        }
+        if (j == n) {
+        return checkSymmetryWithRecursive(Matrix1, transpose, n, i + 1, 0, symmetric, asymmetric);
+        }
+        if (transpose[i][j] != Matrix1 [i][j]) {
+        symmetric = false;
+        }
+        if (transpose[i][j] != -Matrix1[i][j]) {
+        asymmetric = false;
+        }
+        return checkSymmetryWithRecursive(Matrix1, transpose, n, i, j + 1, symmetric, asymmetric);
 }
 
+}
