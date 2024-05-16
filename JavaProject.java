@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class MatrixCalculator {
+public class Main {
 
     public static void main (String[] args) {
 
@@ -15,7 +15,7 @@ public class MatrixCalculator {
         int Matrix1 [][] = new int[n][n];
         int Matrix2 [][] = new int[n][n];
 
-        operations c = new operations();
+        Operations c = new Operations();
 
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
@@ -45,17 +45,18 @@ public class MatrixCalculator {
             System.out.println();
         }
 
-
-        System.out.println("What do you want to calculate with this matrix? :");
-        System.out.println("Sum => + / Subtraction => - / Multiplication => * / Diagonal and Trace => d / Symmetric or Asymmetric => s / Orthogonal matrix or not => o ");
-        System.out.println("Periodic matrix or not => p / Idempotent matrix or not => i / Nilpotent matrix or not => n / Involutive matrix or not => v ");
-
+        System.out.println("What do you want to do with this matrix or matrixes? :");
+        System.out.println("Sum => + / Subtraction => - / Multiplication => * / Diagonal and Trace => d / Symmetric or Asymmetric => s / Orthogonal matrix or not => o / Periodic matrix or not => p / Idempotent matrix or not => i / Nilpotent matrix or not => n / Involutive matrix or not => v ");
+        
         char operation = input.next().charAt(0);
 
         switch(operation) {
             case '+':  c.sum(Matrix1, Matrix2); break;
+            
             case '-':  System.out.println(c.sub(Matrix1, Matrix2 )); break;
+            
             case '*':  System.out.println(c.mult(Matrix1, Matrix2)); break;
+            
             case 'd':  System.out.println("Please enter which matrix you want to use?(1/2): "); 
                        int choice1 = input.nextInt();
                        if(choice1 == 1) {
@@ -64,6 +65,7 @@ public class MatrixCalculator {
                        else if(choice1 == 2) {
                         c.diagonalANDtrace(Matrix2);
                        } break;
+                       
             case 'i': System.out.println("Please enter which matrix you want to use?(1/2): ");
                       int choice2 = input.nextInt();
                       if(choice2 == 1) {
@@ -72,6 +74,7 @@ public class MatrixCalculator {
                       else if(choice2 == 2) {
                         System.out.println(c.isIdempotent(Matrix2));
                       } break;
+                      
             case 'n': System.out.println("Please enter which matrix you want to use?(1/2): ");
                       int choice3 = input.nextInt();
                       if(choice3 == 1) {
@@ -80,6 +83,7 @@ public class MatrixCalculator {
                       else if(choice3 == 2) {
                       System.out.println(c.isNilpotent(Matrix2));
                       } break;
+                      
             case 'v': System.out.println("Please enter which matrix you want to use?(1/2): ");
                       int choice4 = input.nextInt();
                       if(choice4 == 1) {
@@ -88,9 +92,27 @@ public class MatrixCalculator {
                       else if(choice4 == 2) {
                       c.isInvolitive(Matrix2);
                       } break;
+                      
             case 'p': break;
-            case 's': 
-            case 'o':
+            
+            case 's': System.out.println("Please enter which matrix you want to use?(1/2): ");
+                      int choice5 = input.nextInt();
+                      if(choice5 == 1) {
+                        System.out.println(c.symetricORasymetric(Matrix1));
+                      }
+                      else if(choice5 == 2) {
+                        System.out.println(c.symetricORasymetric(Matrix2));
+                      } break;
+                      
+            case 'o': System.out.println("Please enter which matrix you want to use?(1/2): ");
+                      int choice6 = input.nextInt();
+                      if(choice6 == 1) {
+                        System.out.println(c.orthogonalORnot(Matrix1));
+                      }
+                      else if(choice6 == 2) {
+                        System.out.println(c.orthogonalORnot(Matrix2));
+                      } break;
+                      
             default: System.out.println("Invalid operation!");
         }
 
@@ -101,7 +123,7 @@ public class MatrixCalculator {
     }
   }
 
-class operations {
+class Operations {
     void sum(int[][] Matrix1, int[][] Matrix2) {
 
         int length = Matrix1.length;
@@ -307,6 +329,112 @@ void isInvolitive(int[][] Matrix) {
     }else{
         System.out.println("Your matrix is not an involutive matrix");
     }
+}
+
+int symetricORasymetric(int[][] Matrix) {
+    int issymmetric=1;
+    int isasymmetric=1;
+    int length = Matrix.length;
+    
+    System.out.println("TRANSPOSE OF MATRIX : ");
+    int transposematrix[][]=new int[length][length];
+    
+    for(int i = 0; i < length; i++) {
+        for(int j = 0; j < length; j++) {
+        transposematrix[j][i]=Matrix[i][j];
+        System.out.printf("%3d", Matrix[j][i]);
+        }
+    System.out.println();
+    }
+                        
+    for(int i = 0; i < length; i++) {
+        for(int j = 0; j < length; j++) {
+            if(transposematrix[i][j]!=Matrix[i][j]){
+            issymmetric=0;
+            break;
+            }
+        }
+        if(issymmetric==0){
+        break;
+        }
+    }
+                            
+    for(int i = 0; i < length; i++) {
+        for(int j = 0; j < length; j++) {
+            if((transposematrix[i][j])!=(-Matrix[i][j])){
+            isasymmetric=0;
+            break;
+            }
+        }
+        if(isasymmetric==0){
+        break;
+        }
+    }
+    if(isasymmetric==1){
+    System.out.println("Your matrix is an asymmetric matrix .");
+    }else if(issymmetric==1){
+    System.out.println("Your matrix is a symmetric matrix .");
+    }
+    else{
+    System.out.println("Your matrix is neither symmetric nor asymmetric matrix .");
+    }
+    
+    return 0;
+}
+
+static int orthogonalORnot(int[][] Matrix) {
+    int length = Matrix.length;
+    int tempMatrix[][] = new int[length][length];
+    int unitMatrix[][] = new int[length][length];
+    
+    System.out.println("TRANSPOSE OF MATRIX: ");
+    int transposeMatrix[][] = new int[length][length];
+    
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+        transposeMatrix[j][i] = Matrix[i][j];
+        System.out.printf("%3d", Matrix[j][i]);
+        }
+    System.out.println();
+    }
+            
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+            tempMatrix[i][j] = Matrix[i][j] * transposeMatrix[i][j];
+            if (i == j) {
+                unitMatrix[i][j] = tempMatrix[i][j];
+            }
+        }
+    }
+                
+    System.out.println("Transpose of Matrix * Matrix =");
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+            System.out.printf("%3d", unitMatrix[i][j]);
+        }
+    System.out.println();
+    }
+                
+    boolean isUnitMatrix = true;
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+            if ((i == j && unitMatrix[i][j] != 1) || (i != j && unitMatrix[i][j] != 0)) {
+            isUnitMatrix = false;
+            break;
+            }
+        }
+        if (!isUnitMatrix) {
+            break;
+        }
+    }
+    if (isUnitMatrix) {
+        System.out.println("Your matrix is an orthogonal matrix.");
+    } 
+    else {
+        System.out.println("Your matrix is not an orthogonal matrix.");
+    }
+    
+    return 0;
 }
         
 }
