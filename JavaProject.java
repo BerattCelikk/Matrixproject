@@ -98,10 +98,10 @@ public class MatrixCalculator {
             case 's': System.out.println("Please enter which matrix you want to use?(1/2): ");
                       int choice5 = input.nextInt();
                       if(choice5 == 1) {
-                        System.out.println(c.symmetricORasymetric(Matrix1));
+                        System.out.println(c.symmetricORasymmetric(Matrix1));
                       }
                       else if(choice5 == 2) {
-                        System.out.println(c.symmetricORasymetric(Matrix2));
+                        System.out.println(c.symmetricORasymmetric(Matrix2));
                       } break;
                       
             case 'o': System.out.println("Please enter which matrix you want to use?(1/2): ");
