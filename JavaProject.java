@@ -98,10 +98,10 @@ public class Main {
             case 's': System.out.println("Please enter which matrix you want to use?(1/2): ");
                       int choice5 = input.nextInt();
                       if(choice5 == 1) {
-                        System.out.println(c.symetricORasymetric(Matrix1));
+                        System.out.println(c.symmetricORasymetric(Matrix1));
                       }
                       else if(choice5 == 2) {
-                        System.out.println(c.symetricORasymetric(Matrix2));
+                        System.out.println(c.symmetricORasymetric(Matrix2));
                       } break;
                       
             case 'o': System.out.println("Please enter which matrix you want to use?(1/2): ");
@@ -331,7 +331,7 @@ void isInvolitive(int[][] Matrix) {
     }
 }
 
-int symetricORasymetric(int[][] Matrix) {
+int symmetricORasymmetric(int[][] Matrix) {
     int issymmetric=1;
     int isasymmetric=1;
     int length = Matrix.length;
