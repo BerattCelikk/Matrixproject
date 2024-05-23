@@ -1,3 +1,5 @@
+İlk başta iki matrix'in uzunluğunu alıyoruz sonra değerlerini alıyoruz her bir matrix'in.Sonrasında yapılacak işlem seçilir ve o işlem'e göre bir sonuç verilir.
+
 d:Diagonal and Trace => square matrix olmak zorunda. diagonal =>bir köşegen çiz ve her köşegendeki elemanlar diagonalin elemanıdır. Trace ise diagonal elemanlarının toplamıdır.
 
 i:Idempotent =>A^2==A yani karesi kendisine eşitse idempotent matrix tir. Idempotent matrix , square matrix olmak zorunda.
