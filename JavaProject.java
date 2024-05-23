@@ -5,10 +5,9 @@ public class MatrixCalculator {
     public static void main (String[] args) {
 
         String control = "Yes";
+        Scanner input = new Scanner(System.in);
         
         while(control.equals("Yes")) {
-
-        Scanner input = new Scanner(System.in);
 
         System.out.println("Please enter the length of 2 matrixes: ");
         int n = input.nextInt();
@@ -93,23 +92,30 @@ public class MatrixCalculator {
                       c.isInvolitive(Matrix2);
                       } break;
                       
-            case 'p': break;
+            case 'p': System.out.println("Please enter which matrix you want to use?(1/2): ");
+                  int choice5 = input.nextInt();
+                  if(choice5 == 1) {
+                  c.isPeriodic(Matrix1);;
+                  } 
+                  else if(choice5 == 2) {
+                  c.isPeriodic(Matrix2);
+                  } break;
             
             case 's': System.out.println("Please enter which matrix you want to use?(1/2): ");
-                      int choice5 = input.nextInt();
-                      if(choice5 == 1) {
+                      int choice6 = input.nextInt();
+                      if(choice6 == 1) {
                         System.out.println(c.symmetricORasymmetric(Matrix1));
                       }
-                      else if(choice5 == 2) {
+                      else if(choice6 == 2) {
                         System.out.println(c.symmetricORasymmetric(Matrix2));
                       } break;
                       
             case 'o': System.out.println("Please enter which matrix you want to use?(1/2): ");
-                      int choice6 = input.nextInt();
-                      if(choice6 == 1) {
+                      int choice7 = input.nextInt();
+                      if(choice7 == 1) {
                         System.out.println(c.orthogonalORnot(Matrix1));
                       }
-                      else if(choice6 == 2) {
+                      else if(choice7 == 2) {
                         System.out.println(c.orthogonalORnot(Matrix2));
                       } break;
                       
@@ -435,6 +441,51 @@ static int orthogonalORnot(int[][] Matrix) {
     }
     
     return 0;
+}
+
+void isPeriodic(int[][] Matrix) {
+    System.out.println("enter the period of matrix :");
+    Scanner get = new Scanner(System.in);
+    int period=get.nextInt();
+    int length = Matrix.length;
+    int periodic_matrix[][]=new int[length][length];
+    System.out.println("PERIODIC  MATRIX : ");
+    for(int p=1;p<=period+1;p++){
+        for(int i=0;i<length;i++){
+            for(int j=0;j<length;j++){
+                int sum=0;
+                for(int k=0;k<length;k++){
+                    
+                    sum+=Matrix[i][k]*Matrix[k][j];
+                }
+                periodic_matrix[i][j]+= sum;
+            }
+        }    
+    }
+    
+    for(int i=0;i<length;i++){
+        for(int j=0;j<length;j++){
+            System.out.printf("%3d",periodic_matrix[i][j]);
+        }
+        System.out.println();
+    }
+    boolean isperiodic=true;
+    for(int i=0;i<length;i++){
+        for(int j=0;j<length;j++){
+            if(periodic_matrix[i][j]!=Matrix[i][j]){
+                isperiodic=false;
+                break;
+            }
+        }
+        if(!(isperiodic)){
+            break;
+        }
+    }
+    if(isperiodic){
+        System.out.println("Your matrix is an periodic matrix");
+    }else{
+        System.out.println("Your matrix is not an periodic matrix");
+    }
 }
         
 }
